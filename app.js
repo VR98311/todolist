@@ -1,7 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
+import mongoose from "mongoose";
 
+mongoose.connect("mongodb://localhost:27017/todolistDB")
+
+const nameSchema = {
+  name:String
+}
+
+const names = mongoose.model("name",nameSchema);
 
  var items = [];
 const app = express();
