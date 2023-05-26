@@ -1,35 +1,49 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/todolistDB")
+mongoose.connect("mongodb://127.0.0.1:27017/todolistDB")
 
 const nameSchema = {
   name:String
 }
 
-const names = mongoose.model("name",nameSchema);
+const Name = mongoose.model("Name",nameSchema);
 
- var items = [];
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set("view engine","ejs");
 
+const fruits = new Name({
+  name: "buy fruits"
+});
+  
+const vegetables = new Name({
+  name:"Buy vegetables"
+});
+
+const drinks = new Name({
+   name:"buy drinks"
+});
+
+
+const defaultItems = [];
+// Name.insertMany([fruits,vegetables,drinks]).then((err,data)=>{
+//    if(err){
+//     console.log(err);
+//    }else{
+//     console.log(data);
+// }});
+Name.find().then((data)=>{
+  console.log(data);
+});
 app.get("/",(req,res) =>{
 
-  var today = new Date(); 
+ 
 
-  var options = {
-    weekday:"long",
-    day:"numeric",
-    month:"long",
-  }
-
-  var day = today.toLocaleDateString("en-US",options);
-
-  res.render("list",{kindofday:day,listitems:items});
+  res.render("list",{kindofday:"Today",listitems:defaultItems});
 });
 
 app.post("/",(req,res)=>{

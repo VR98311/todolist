@@ -11,12 +11,10 @@
     <div class="box">
     <h1 id="heading"><%=kindofday%></h1>
     <ul>
-        <li class="item"><input type="checkbox"><p>food</p></li>
-        <li class="item"><input type="checkbox"><p>eat food</p></li>
-        <li class="item"><input type="checkbox"><p>repeat</p></li>
-       <% for( var i =0; i<listitems.length; i++ ) { %>
-            <li class="item last-child"><input type="checkbox"><p><%= listitems[i] %></p></li>
-        <% } %>
+        
+        <% listitems.forEach(function(list){ %>
+            <li class="item last-child"><input type="checkbox"><p><%= list.name %></p></li>
+       <% }); %>         
     </ul>
     </div>
     <form action="/" method="post">
