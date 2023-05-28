@@ -2,8 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
 const mongoose = require("mongoose");
-
-mongoose.connect("mongodb://127.0.0.1:27017/todolistDB")
+_ = require("lodash");
+mongoose.connect("mongodb+srv://vikyathrao-admin:test123@cluster0.vhdacwg.mongodb.net/todoListDB")
 
 const nameSchema = {
   name:String
@@ -40,13 +40,11 @@ let listName = "today";
 
 
 app.get("/:customListName", function(req, res){
-  const customListName = req.params.customListName;
+  const customListName = _.capitalize(req.params.customListName);
  
   List.findOne({ name: customListName },)
     .then(function(foundList) {
       if (!foundList) {
-
-        console.log("items added");
         const list = new List({
           name: customListName,
           items: defaultItems
@@ -61,7 +59,6 @@ app.get("/:customListName", function(req, res){
           });
       } else {
         res.render("list", { listTitle: foundList.name, newListItems: foundList.items });
-        console.log("Not added")
       }
     })
     .catch(function(err) {
