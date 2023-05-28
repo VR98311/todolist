@@ -9,17 +9,20 @@
 </head>
 <body>
     <div class="box">
-    <h1 id="heading"><%=kindofday%></h1>
+    <h1 id="heading"><%=listTitle%></h1>
     <ul>
         
-        <% listitems.forEach(function(list){ %>
-            <li class="item last-child"><input type="checkbox"><p><%= list.name %></p></li>
+        <% newListItems.forEach(function(list){ %>
+            <form action="/delete" method="post">
+                <li class="item"><input type="checkbox" name="checkbox" value="<%=list._id%>"  onchange="this.form.submit()"><p><%= list.name %></p></li>
+                <input type="hidden" name="hiddenlistTitle" value="<%=listTitle%>"></input>
+            </form>
        <% }); %>         
     </ul>
-    </div>
     <form action="/" method="post">
         <input type="text" name="item" placeholder="things to do">
-        <button type="submit">Add</button>
+        <button type="submit" name="list" value="<%=listTitle%>">+</button>
     </form>
+  </div>
 </body>
 </html>
